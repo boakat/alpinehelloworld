@@ -2,8 +2,8 @@ pipeline {
      environment {
        IMAGE_NAME = "alpinehelloworld"
        IMAGE_TAG = "latest"
-       STAGING = "akaboidi-staging"
-       PRODUCTION = "akaboidi-production"
+       STAGING = "eazytraining-staging"
+       PRODUCTION = "eazytraining-production"
      }
      agent none
      stages {
@@ -11,7 +11,7 @@ pipeline {
              agent any
              steps {
                 script {
-                  sh 'docker build -t akaboidi/$IMAGE_NAME:$IMAGE_TAG .'
+                  sh 'docker build -t eazytraining/$IMAGE_NAME:$IMAGE_TAG .'
                 }
              }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                script {
                  sh '''
-                    docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT=5000 akaboidi/$IMAGE_NAME:$IMAGE_TAG
+                    docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT=5000 eazytraining/$IMAGE_NAME:$IMAGE_TAG
                     sleep 5
                  '''
                }
@@ -86,7 +86,6 @@ pipeline {
         }
      }
   }
-     
   post {
        success {
          slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
